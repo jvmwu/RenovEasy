@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>附近装修工</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007AFF',
+                        secondary: '#34C759',
+                        danger: '#FF3B30',
+                        warning: '#FF9500',
+                        background: '#F2F2F7'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .worker-card {
+            transition: transform 0.2s ease-in-out;
+        }
+        .worker-card:hover {
+            transform: translateY(-2px);
+        }
+        .case-image {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="bg-background h-screen">
+    <!-- 顶部导航栏 -->
+    <div class="bg-white shadow-sm px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <i class="fas fa-users text-primary text-xl"></i>
+            <div>
+                <h1 class="font-semibold text-gray-800">附近装修工</h1>
+                <p class="text-xs text-gray-500">为您推荐优质装修师傅</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <i class="fas fa-filter text-gray-600"></i>
+            <i class="fas fa-search text-gray-600"></i>
+        </div>
+    </div>
+
+    <!-- 筛选条件 -->
+    <div class="bg-white px-4 py-3 border-b border-gray-200">
+        <div class="flex space-x-2 overflow-x-auto">
+            <button class="bg-primary text-white px-4 py-2 rounded-full text-sm whitespace-nowrap">全部</button>
+            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm whitespace-nowrap">全屋装修</button>
+            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm whitespace-nowrap">卫生间</button>
+            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm whitespace-nowrap">厨房</button>
+            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm whitespace-nowrap">卧室</button>
+        </div>
+    </div>
+
+    <!-- 装修工列表 -->
+    <div class="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+        <!-- 装修工卡片 1 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 worker-card">
+            <div class="flex items-start space-x-3">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" 
+                     alt="装修工头像" class="w-16 h-16 rounded-full object-cover">
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-semibold text-gray-800">张师傅</h3>
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-star text-warning text-sm"></i>
+                            <span class="text-sm font-medium">4.8</span>
+                            <span class="text-xs text-gray-500">(128)</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">专业装修15年 | 距离您1.2km</p>
+                    <div class="flex items-center space-x-4 mb-3">
+                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">已认证</span>
+                        <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">在线</span>
+                        <span class="text-xs text-gray-500">完成订单: 156</span>
+                    </div>
+                    
+                    <!-- 装修案例 -->
+                    <div class="mb-3">
+                        <p class="text-xs text-gray-500 mb-2">装修案例</p>
+                        <div class="flex space-x-2">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=80&h=60&fit=crop" 
+                                 alt="案例1" class="case-image">
+                            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=80&h=60&fit=crop" 
+                                 alt="案例2" class="case-image">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=80&h=60&fit=crop" 
+                                 alt="案例3" class="case-image">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-heart text-gray-400"></i>
+                            <span class="text-sm text-gray-500">收藏</span>
+                        </div>
+                        <button class="bg-primary text-white px-4 py-2 rounded-lg text-sm">立即联系</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 装修工卡片 2 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 worker-card">
+            <div class="flex items-start space-x-3">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
+                     alt="装修工头像" class="w-16 h-16 rounded-full object-cover">
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-semibold text-gray-800">李师傅</h3>
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-star text-warning text-sm"></i>
+                            <span class="text-sm font-medium">4.6</span>
+                            <span class="text-xs text-gray-500">(89)</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">水电装修专家 | 距离您2.1km</p>
+                    <div class="flex items-center space-x-4 mb-3">
+                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">已认证</span>
+                        <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">忙碌</span>
+                        <span class="text-xs text-gray-500">完成订单: 98</span>
+                    </div>
+                    
+                    <!-- 装修案例 -->
+                    <div class="mb-3">
+                        <p class="text-xs text-gray-500 mb-2">装修案例</p>
+                        <div class="flex space-x-2">
+                            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=80&h=60&fit=crop" 
+                                 alt="案例1" class="case-image">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=80&h=60&fit=crop" 
+                                 alt="案例2" class="case-image">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=80&h=60&fit=crop" 
+                                 alt="案例3" class="case-image">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-heart text-gray-400"></i>
+                            <span class="text-sm text-gray-500">收藏</span>
+                        </div>
+                        <button class="bg-primary text-white px-4 py-2 rounded-lg text-sm">立即联系</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 装修工卡片 3 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 worker-card">
+            <div class="flex items-start space-x-3">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face" 
+                     alt="装修工头像" class="w-16 h-16 rounded-full object-cover">
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-semibold text-gray-800">王师傅</h3>
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-star text-warning text-sm"></i>
+                            <span class="text-sm font-medium">4.9</span>
+                            <span class="text-xs text-gray-500">(203)</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">木工装修大师 | 距离您3.5km</p>
+                    <div class="flex items-center space-x-4 mb-3">
+                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">已认证</span>
+                        <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">在线</span>
+                        <span class="text-xs text-gray-500">完成订单: 234</span>
+                    </div>
+                    
+                    <!-- 装修案例 -->
+                    <div class="mb-3">
+                        <p class="text-xs text-gray-500 mb-2">装修案例</p>
+                        <div class="flex space-x-2">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=80&h=60&fit=crop" 
+                                 alt="案例1" class="case-image">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=80&h=60&fit=crop" 
+                                 alt="案例2" class="case-image">
+                            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=80&h=60&fit=crop" 
+                                 alt="案例3" class="case-image">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-heart text-danger"></i>
+                            <span class="text-sm text-gray-500">已收藏</span>
+                        </div>
+                        <button class="bg-primary text-white px-4 py-2 rounded-lg text-sm">立即联系</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 装修工卡片 4 -->
+        <div class="bg-white rounded-lg shadow-sm p-4 worker-card">
+            <div class="flex items-start space-x-3">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" 
+                     alt="装修工头像" class="w-16 h-16 rounded-full object-cover">
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-semibold text-gray-800">陈师傅</h3>
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-star text-warning text-sm"></i>
+                            <span class="text-sm font-medium">4.7</span>
+                            <span class="text-xs text-gray-500">(156)</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">油漆装修专家 | 距离您1.8km</p>
+                    <div class="flex items-center space-x-4 mb-3">
+                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">已认证</span>
+                        <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">在线</span>
+                        <span class="text-xs text-gray-500">完成订单: 187</span>
+                    </div>
+                    
+                    <!-- 装修案例 -->
+                    <div class="mb-3">
+                        <p class="text-xs text-gray-500 mb-2">装修案例</p>
+                        <div class="flex space-x-2">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=80&h=60&fit=crop" 
+                                 alt="案例1" class="case-image">
+                            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=80&h=60&fit=crop" 
+                                 alt="案例2" class="case-image">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=80&h=60&fit=crop" 
+                                 alt="案例3" class="case-image">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-heart text-gray-400"></i>
+                            <span class="text-sm text-gray-500">收藏</span>
+                        </div>
+                        <button class="bg-primary text-white px-4 py-2 rounded-lg text-sm">立即联系</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bg-white border-t border-gray-200 px-4 py-2 flex items-center justify-around">
+        <div class="flex flex-col items-center py-2">
+            <i class="fas fa-home text-gray-400 text-lg"></i>
+            <span class="text-xs text-gray-400 mt-1">首页</span>
+        </div>
+        <div class="flex flex-col items-center py-2">
+            <i class="fas fa-users text-primary text-lg"></i>
+            <span class="text-xs text-primary mt-1">附近</span>
+        </div>
+        <div class="flex flex-col items-center py-2">
+            <i class="fas fa-user text-gray-400 text-lg"></i>
+            <span class="text-xs text-gray-400 mt-1">我的</span>
+        </div>
+    </div>
+
+    <script>
+        // 收藏功能
+        function toggleFavorite(element) {
+            const icon = element.querySelector('i');
+            const text = element.querySelector('span');
+            
+            if (icon.classList.contains('text-gray-400')) {
+                icon.classList.remove('text-gray-400');
+                icon.classList.add('text-danger');
+                text.textContent = '已收藏';
+            } else {
+                icon.classList.remove('text-danger');
+                icon.classList.add('text-gray-400');
+                text.textContent = '收藏';
+            }
+        }
+
+        // 为所有收藏按钮添加点击事件
+        document.addEventListener('DOMContentLoaded', function() {
+            const favoriteButtons = document.querySelectorAll('.flex.items-center.space-x-2');
+            favoriteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    toggleFavorite(this);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单管理</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007AFF',
+                        secondary: '#34C759',
+                        danger: '#FF3B30',
+                        warning: '#FF9500',
+                        background: '#F2F2F7'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .order-tab {
+            transition: all 0.3s ease;
+        }
+        .order-tab.active {
+            color: #007AFF;
+            border-bottom: 2px solid #007AFF;
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        .chat-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+        .chat-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            height: 70%;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="bg-background h-screen">
+    <!-- 顶部导航栏 -->
+    <div class="bg-white shadow-sm px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <i class="fas fa-clipboard-list text-primary text-xl"></i>
+            <div>
+                <h1 class="font-semibold text-gray-800">订单管理</h1>
+                <p class="text-xs text-gray-500">管理您的施工订单</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <i class="fas fa-search text-gray-600"></i>
+            <i class="fas fa-filter text-gray-600"></i>
+        </div>
+    </div>
+
+    <!-- 订单统计 -->
+    <div class="bg-white mt-2 px-4 py-4">
+        <div class="grid grid-cols-4 gap-4 text-center">
+            <div>
+                <div class="text-2xl font-bold text-primary">2</div>
+                <div class="text-xs text-gray-500 mt-1">进行中</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-warning">1</div>
+                <div class="text-xs text-gray-500 mt-1">待开始</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-secondary">15</div>
+                <div class="text-xs text-gray-500 mt-1">已完成</div>
+            </div>
+            <div>
+                <div class="text-2xl font-bold text-gray-600">¥28.5万</div>
+                <div class="text-xs text-gray-500 mt-1">总收入</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 订单标签页 -->
+    <div class="bg-white mt-2">
+        <div class="flex border-b border-gray-200">
+            <button class="flex-1 py-3 text-center order-tab active" onclick="switchTab('inProgress')">
+                进行中
+            </button>
+            <button class="flex-1 py-3 text-center order-tab" onclick="switchTab('pending')">
+                待开始
+            </button>
+            <button class="flex-1 py-3 text-center order-tab" onclick="switchTab('completed')">
+                已完成
+            </button>
+        </div>
+    </div>
+
+    <!-- 订单列表容器 -->
+    <div class="flex-1 overflow-y-auto">
+        <!-- 进行中订单 -->
+        <div id="inProgress-orders" class="px-4 py-4 space-y-4">
+            <div class="bg-white rounded-lg shadow-sm p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-home text-warning"></i>
+                        <span class="font-medium text-gray-800">全屋装修</span>
+                    </div>
+                    <span class="text-sm text-warning">施工中</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">北京市朝阳区建国路88号，张女士</p>
+                
+                <!-- 施工进度 -->
+                <div class="mb-4">
+                    <div class="flex items-center justify-between text-sm mb-2">
+                        <span>施工进度</span>
+                        <span>60%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-warning h-2 rounded-full progress-bar" style="width: 60%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">已完成水电改造，正在进行橱柜安装</p>
+                </div>
+
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500">预算: ¥15万</span>
+                        <span class="text-sm text-gray-500">预计完成: 2024-01-20</span>
+                    </div>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm" onclick="showChat()">
+                        <i class="fas fa-comments mr-1"></i>联系客户
+                    </button>
+                    <button class="flex-1 bg-primary text-white py-2 rounded-lg text-sm" onclick="updateProgress()">
+                        <i class="fas fa-edit mr-1"></i>更新进度
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-bath text-warning"></i>
+                        <span class="font-medium text-gray-800">卫生间装修</span>
+                    </div>
+                    <span class="text-sm text-warning">施工中</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">北京市海淀区中关村大街1号，李女士</p>
+                
+                <!-- 施工进度 -->
+                <div class="mb-4">
+                    <div class="flex items-center justify-between text-sm mb-2">
+                        <span>施工进度</span>
+                        <span>40%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-warning h-2 rounded-full progress-bar" style="width: 40%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">已完成拆除工作，正在进行防水处理</p>
+                </div>
+
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500">预算: ¥3万</span>
+                        <span class="text-sm text-gray-500">预计完成: 2024-01-18</span>
+                    </div>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm" onclick="showChat()">
+                        <i class="fas fa-comments mr-1"></i>联系客户
+                    </button>
+                    <button class="flex-1 bg-primary text-white py-2 rounded-lg text-sm" onclick="updateProgress()">
+                        <i class="fas fa-edit mr-1"></i>更新进度
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 待开始订单 -->
+        <div id="pending-orders" class="px-4 py-4 space-y-4 hidden">
+            <div class="bg-white rounded-lg shadow-sm p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-utensils text-primary"></i>
+                        <span class="font-medium text-gray-800">厨房装修</span>
+                    </div>
+                    <span class="text-sm text-primary">待开始</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">北京市西城区西单大街99号，王先生</p>
+                
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500">预算: ¥8万</span>
+                        <span class="text-sm text-gray-500">计划开始: 2024-01-22</span>
+                    </div>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm" onclick="showChat()">
+                        <i class="fas fa-comments mr-1"></i>联系客户
+                    </button>
+                    <button class="flex-1 bg-secondary text-white py-2 rounded-lg text-sm" onclick="startWork()">
+                        <i class="fas fa-play mr-1"></i>开始施工
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 已完成订单 -->
+        <div id="completed-orders" class="px-4 py-4 space-y-4 hidden">
+            <div class="bg-white rounded-lg shadow-sm p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-home text-secondary"></i>
+                        <span class="font-medium text-gray-800">客厅装修</span>
+                    </div>
+                    <span class="text-sm text-secondary">已完成</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">北京市东城区王府井大街88号，陈女士</p>
+                
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500">实际收入: ¥12万</span>
+                        <span class="text-sm text-gray-500">完成时间: 2024-01-10</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="fas fa-star text-warning text-sm"></i>
+                    </div>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm">查看详情</button>
+                    <button class="flex-1 bg-primary text-white py-2 rounded-lg text-sm">再次合作</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-bed text-secondary"></i>
+                        <span class="font-medium text-gray-800">卧室装修</span>
+                    </div>
+                    <span class="text-sm text-secondary">已完成</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">北京市丰台区方庄路66号，赵先生</p>
+                
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500">实际收入: ¥6万</span>
+                        <span class="text-sm text-gray-500">完成时间: 2024-01-05</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="far fa-star text-warning text-sm"></i>
+                    </div>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm">查看详情</button>
+                    <button class="flex-1 bg-primary text-white py-2 rounded-lg text-sm">再次合作</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 聊天模态框 -->
+    <div id="chatModal" class="chat-modal">
+        <div class="chat-content">
+            <!-- 聊天头部 -->
+            <div class="bg-white px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" 
+                         alt="客户头像" class="w-10 h-10 rounded-full object-cover">
+                    <div>
+                        <p class="font-medium text-gray-800">张女士</p>
+                        <p class="text-xs text-gray-500">全屋装修项目</p>
+                    </div>
+                </div>
+                <button onclick="hideChat()" class="text-gray-500">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- 聊天消息区域 -->
+            <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                <div class="flex justify-start">
+                    <div class="bg-gray-200 rounded-lg px-3 py-2 max-w-xs">
+                        <p class="text-sm text-gray-800">师傅，施工进度怎么样了？</p>
+                        <p class="text-xs text-gray-500 mt-1">14:30</p>
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="bg-primary text-white rounded-lg px-3 py-2 max-w-xs">
+                        <p class="text-sm">您好！水电改造已经完成，现在正在进行橱柜安装，预计明天完成</p>
+                        <p class="text-xs text-blue-100 mt-1">14:32</p>
+                    </div>
+                </div>
+                <div class="flex justify-start">
+                    <div class="bg-gray-200 rounded-lg px-3 py-2 max-w-xs">
+                        <p class="text-sm text-gray-800">好的，辛苦了！</p>
+                        <p class="text-xs text-gray-500 mt-1">14:35</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 输入框 -->
+            <div class="bg-white px-4 py-3 border-t border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <input type="text" placeholder="输入消息..." class="flex-1 border border-gray-300 rounded-full px-4 py-2 text-sm">
+                    <button class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center">
+                        <i class="fas fa-paper-plane text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bg-white border-t border-gray-200 px-4 py-2 flex items-center justify-around">
+        <div class="flex flex-col items-center py-2">
+            <i class="fas fa-map text-gray-400 text-lg"></i>
+            <span class="text-xs text-gray-400 mt-1">地图</span>
+        </div>
+        <div class="flex flex-col items-center py-2">
+            <i class="fas fa-clipboard-list text-primary text-lg"></i>
+            <span class="text-xs text-primary mt-1">订单</span>
+        </div>
+        <div class="flex flex-col items-center py-2">
+            <i class="fas fa-user text-gray-400 text-lg"></i>
+            <span class="text-xs text-gray-400 mt-1">我的</span>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // 隐藏所有订单列表
+            document.getElementById('inProgress-orders').classList.add('hidden');
+            document.getElementById('pending-orders').classList.add('hidden');
+            document.getElementById('completed-orders').classList.add('hidden');
+            
+            // 移除所有标签的active状态
+            document.querySelectorAll('.order-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // 显示选中的订单列表
+            document.getElementById(tabName + '-orders').classList.remove('hidden');
+            
+            // 添加选中标签的active状态
+            event.target.classList.add('active');
+        }
+
+        function showChat() {
+            document.getElementById('chatModal').style.display = 'block';
+        }
+
+        function hideChat() {
+            document.getElementById('chatModal').style.display = 'none';
+        }
+
+        function updateProgress() {
+            alert('正在打开进度更新页面...');
+        }
+
+        function startWork() {
+            alert('施工已开始！');
+        }
+    </script>
+</body>
+</html> 
