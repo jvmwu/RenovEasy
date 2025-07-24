@@ -3,240 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenovEasy - 家庭装修接单App原型</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+    <title>家庭装修接单App - 原型展示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#007AFF',
-                        secondary: '#34C759',
-                        danger: '#FF3B30',
-                        warning: '#FF9500',
-                        background: '#F2F2F7'
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="./styles/design-system.css">
     <style>
-        .phone-frame {
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .prototype-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .prototype-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .prototype-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+        
+        .page-frame {
+            background: #000;
+            border-radius: 39px;
+            padding: 3px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .page-frame:hover {
+            transform: scale(1.02);
+        }
+        
+        .page-iframe {
             width: 393px;
             height: 852px;
-            border-radius: 47px;
-            padding: 8px;
-            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            position: relative;
-        }
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            border-radius: 39px;
-            overflow: hidden;
-            background: #000;
-        }
-        .phone-notch {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 126px;
-            height: 30px;
-            background: #000;
-            border-radius: 0 0 20px 20px;
-            z-index: 10;
-        }
-        iframe {
             border: none;
-            width: 100%;
-            height: 100%;
+            border-radius: 36px;
+            background: #F2F2F7;
         }
-        .tab-button {
-            transition: all 0.3s ease;
-        }
-        .tab-button.active {
-            background-color: #007AFF;
+        
+        .page-label {
+            text-align: center;
+            margin-top: 15px;
             color: white;
+            font-weight: 600;
+            font-size: 16px;
         }
-        .tab-button:hover:not(.active) {
-            background-color: #f3f4f6;
+        
+        .user-section, .worker-section {
+            grid-column: 1 / -1;
+            width: 100%;
         }
-        .tab-content {
-            display: none;
+        
+        .section-title {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 40px 0 20px 0;
+            text-align: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
         }
-        .tab-content.active {
-            display: block;
+        
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            justify-items: center;
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen p-8">
-    <div class="max-w-7xl mx-auto">
-        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">RenovEasy - 家庭装修接单App原型</h1>
+<body>
+    <div class="prototype-container">
+        <div class="prototype-header">
+            <h1 class="text-4xl font-bold mb-4">家庭装修接单App</h1>
+            <p class="text-xl opacity-90">高保真原型展示 - iPhone 16 Pro适配</p>
+            <p class="text-sm opacity-75 mt-2">基于iOS Human Interface Guidelines设计</p>
+        </div>
         
-        <!-- Tab 导航 -->
-        <div class="flex justify-center mb-8">
-            <div class="bg-white rounded-lg shadow-md p-1 flex">
-                <button class="tab-button active px-6 py-3 rounded-md font-medium text-sm flex items-center space-x-2" 
-                        onclick="switchTab('user')">
-                    <i class="fas fa-user"></i>
-                    <span>用户端</span>
-                </button>
-                <button class="tab-button px-6 py-3 rounded-md font-medium text-sm flex items-center space-x-2" 
-                        onclick="switchTab('worker')">
-                    <i class="fas fa-tools"></i>
-                    <span>装修工端</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- 用户端内容 -->
-        <div id="user-tab" class="tab-content active">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-                <div class="text-center">
-                    <h2 class="text-xl font-semibold mb-4 text-primary">装修首页</h2>
-                    <div class="phone-frame">
-                        <div class="phone-notch"></div>
-                        <div class="phone-screen">
-                            <iframe src="user-home.html" title="用户首页"></iframe>
-                        </div>
+        <!-- 用户端界面 -->
+        <div class="user-section">
+            <h2 class="section-title">
+                <i class="fas fa-user mr-3"></i>用户端界面
+            </h2>
+            <div class="section-grid">
+                <div class="page-frame">
+                    <iframe src="./user-home.html" class="page-iframe"></iframe>
+                    <div class="page-label">
+                        <i class="fas fa-home mr-2"></i>装修首页
                     </div>
-                    <p class="mt-2 text-sm text-gray-600">地图下单 - 选择位置和装修类型</p>
                 </div>
-
-                <div class="text-center">
-                    <h2 class="text-xl font-semibold mb-4 text-primary">附近页面</h2>
-                    <div class="phone-frame">
-                        <div class="phone-notch"></div>
-                        <div class="phone-screen">
-                            <iframe src="user-nearby.html" title="附近装修工"></iframe>
-                        </div>
+                
+                <div class="page-frame">
+                    <iframe src="./user-nearby.html" class="page-iframe"></iframe>
+                    <div class="page-label">
+                        <i class="fas fa-map-marker-alt mr-2"></i>附近页面
                     </div>
-                    <p class="mt-2 text-sm text-gray-600">装修工列表 - 浏览案例和评价</p>
                 </div>
-
-                <div class="text-center">
-                    <h2 class="text-xl font-semibold mb-4 text-primary">我的页面</h2>
-                    <div class="phone-frame">
-                        <div class="phone-notch"></div>
-                        <div class="phone-screen">
-                            <iframe src="user-profile.html" title="用户我的"></iframe>
-                        </div>
-                    </div>
-                    <p class="mt-2 text-sm text-gray-600">订单管理 - 账户设置</p>
-                </div>
-            </div>
-
-            <!-- 用户端功能说明 -->
-            <div class="mt-12 p-6 bg-white rounded-lg shadow-lg">
-                <h3 class="text-lg font-semibold mb-4 text-primary flex items-center">
-                    <i class="fas fa-user mr-2"></i>用户端功能说明
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="font-medium text-gray-800 mb-2">核心功能</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• 地图标记位置下单装修需求</li>
-                            <li>• 选择装修类型、预算范围</li>
-                            <li>• 上传现场照片和详细描述</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-medium text-gray-800 mb-2">管理功能</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• 浏览附近装修工和案例</li>
-                            <li>• 管理订单状态和收藏</li>
-                            <li>• 账户设置和个人信息管理</li>
-                        </ul>
+                
+                <div class="page-frame">
+                    <iframe src="./user-profile.html" class="page-iframe"></iframe>
+                    <div class="page-label">
+                        <i class="fas fa-user-circle mr-2"></i>我的页面
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- 装修工端内容 -->
-        <div id="worker-tab" class="tab-content">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-                <div class="text-center">
-                    <h2 class="text-xl font-semibold mb-4 text-secondary">地图首页</h2>
-                    <div class="phone-frame">
-                        <div class="phone-notch"></div>
-                        <div class="phone-screen">
-                            <iframe src="worker-home.html" title="装修工首页"></iframe>
-                        </div>
+        
+        <!-- 装修工端界面 -->
+        <div class="worker-section">
+            <h2 class="section-title">
+                <i class="fas fa-hard-hat mr-3"></i>装修工端界面
+            </h2>
+            <div class="section-grid">
+                <div class="page-frame">
+                    <iframe src="./worker-home.html" class="page-iframe"></iframe>
+                    <div class="page-label">
+                        <i class="fas fa-map mr-2"></i>地图首页
                     </div>
-                    <p class="mt-2 text-sm text-gray-600">订单地图 - 实时查看附近订单</p>
                 </div>
-
-                <div class="text-center">
-                    <h2 class="text-xl font-semibold mb-4 text-secondary">订单管理</h2>
-                    <div class="phone-frame">
-                        <div class="phone-notch"></div>
-                        <div class="phone-screen">
-                            <iframe src="worker-orders.html" title="订单管理"></iframe>
-                        </div>
+                
+                <div class="page-frame">
+                    <iframe src="./worker-orders.html" class="page-iframe"></iframe>
+                    <div class="page-label">
+                        <i class="fas fa-clipboard-list mr-2"></i>订单页面
                     </div>
-                    <p class="mt-2 text-sm text-gray-600">施工管理 - 进度跟踪和客户沟通</p>
                 </div>
-
-                <div class="text-center">
-                    <h2 class="text-xl font-semibold mb-4 text-secondary">我的页面</h2>
-                    <div class="phone-frame">
-                        <div class="phone-notch"></div>
-                        <div class="phone-screen">
-                            <iframe src="worker-profile.html" title="装修工我的"></iframe>
-                        </div>
-                    </div>
-                    <p class="mt-2 text-sm text-gray-600">资质展示 - 收入统计和评价</p>
-                </div>
-            </div>
-
-            <!-- 装修工端功能说明 -->
-            <div class="mt-12 p-6 bg-white rounded-lg shadow-lg">
-                <h3 class="text-lg font-semibold mb-4 text-secondary flex items-center">
-                    <i class="fas fa-tools mr-2"></i>装修工端功能说明
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="font-medium text-gray-800 mb-2">接单功能</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• 地图实时显示附近订单</li>
-                            <li>• 按距离和预算筛选订单</li>
-                            <li>• 接单、导航和查看详情</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-medium text-gray-800 mb-2">管理功能</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• 管理施工进度和客户沟通</li>
-                            <li>• 展示资质和收入统计</li>
-                            <li>• 案例展示和客户评价</li>
-                        </ul>
+                
+                <div class="page-frame">
+                    <iframe src="./worker-profile.html" class="page-iframe"></iframe>
+                    <div class="page-label">
+                        <i class="fas fa-id-card mr-2"></i>我的页面
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- 底部信息 -->
+        <div class="text-center mt-16 text-white opacity-75">
+            <p class="mb-2">
+                <i class="fas fa-mobile-alt mr-2"></i>
+                适配设备: iPhone 16 Pro (393×852)
+            </p>
+            <p class="mb-2">
+                <i class="fas fa-code mr-2"></i>
+                技术栈: HTML5 + Tailwind CSS + FontAwesome + Google Maps
+            </p>
+            <p>
+                <i class="fas fa-palette mr-2"></i>
+                设计规范: iOS Human Interface Guidelines
+            </p>
         </div>
     </div>
-
+    
     <script>
-        function switchTab(tabName) {
-            // 隐藏所有标签内容
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
+        // 页面加载完成后的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为所有iframe添加加载完成的淡入效果
+            const iframes = document.querySelectorAll('.page-iframe');
+            iframes.forEach((iframe, index) => {
+                iframe.style.opacity = '0';
+                iframe.style.transition = 'opacity 0.5s ease';
+                
+                iframe.onload = function() {
+                    setTimeout(() => {
+                        iframe.style.opacity = '1';
+                    }, index * 200); // 错开加载动画
+                };
             });
             
-            // 移除所有标签按钮的active状态
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
+            // 添加页面框架的悬停效果
+            const frames = document.querySelectorAll('.page-frame');
+            frames.forEach(frame => {
+                frame.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 0.4)';
+                });
+                
+                frame.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)';
+                });
             });
+        });
+        
+        // 响应式处理
+        function handleResize() {
+            const container = document.querySelector('.prototype-container');
+            const width = window.innerWidth;
             
-            // 显示选中的标签内容
-            document.getElementById(tabName + '-tab').classList.add('active');
-            
-            // 添加选中标签按钮的active状态
-            event.target.classList.add('active');
+            if (width < 1200) {
+                container.style.padding = '0 10px';
+            } else {
+                container.style.padding = '0 20px';
+            }
         }
+        
+        window.addEventListener('resize', handleResize);
+        handleResize(); // 初始调用
     </script>
 </body>
-</html> 
+</html>

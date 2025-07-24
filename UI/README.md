@@ -1,134 +1,339 @@
-# RenovEasy - 家庭装修接单App原型
+# 家庭装修接单App - 高保真原型文档
 
 ## 项目概述
 
-RenovEasy是一款家庭装修接单App的原型设计，分为用户端和装修工端两个主要模块。该原型采用现代化的移动端设计理念，严格遵循iOS Human Interface Guidelines，为用户提供直观、高效的装修服务体验。
-
-## 功能特性
-
-### 用户端功能
-- **装修首页**: 地图标记位置下单装修需求
-  - 选择装修类型（全屋装修、卫生间、厨房、卧室）
-  - 设置预算范围
-  - 上传现场照片
-  - 填写详细描述
-- **附近页面**: 展示附近装修工
-  - 查看装修工信息和评分
-  - 浏览过往装修案例
-  - 收藏喜欢的装修工
-- **我的页面**: 订单管理
-  - 查看全部订单（待接单、施工中、已完成）
-  - 管理收藏的装修工
-  - 账户设置（个人信息、手机号码、密码修改、消息通知、隐私设置、客服帮助、关于我们）
-
-### 装修工端功能
-- **地图首页**: 实时显示附近地图订单
-  - 按距离和预算筛选订单
-  - 订单状态标识（未接单绿色、已接单红色）
-  - 查看订单详情、接单、导航
-- **订单页面**: 管理已接订单
-  - 跟踪施工进度
-  - 与客户实时沟通
-  - 更新施工状态
-- **我的页面**: 个人中心
-  - 展示个人资质和认证
-  - 收入统计
-  - 客户评价管理
-  - 过往装修案例展示
+本项目是一个基于地理位置的双端服务平台原型，连接需要装修服务的用户和专业装修工人。采用HTML5 + Tailwind CSS技术栈开发，严格遵循iOS Human Interface Guidelines设计规范，针对iPhone 16 Pro进行了专门优化。
 
 ## 技术栈
 
-- **前端框架**: HTML5 + Tailwind CSS 4.1.11
+- **前端框架**: HTML5 + CSS3
+- **样式框架**: Tailwind CSS 4.1.11
 - **图标库**: FontAwesome 6.4.0
-- **地图服务**: Google Maps API
-- **响应式设计**: 移动端优先，适配iPhone 16 Pro屏幕规格
+- **地图服务**: Google Maps JavaScript API
+- **设备适配**: iPhone 16 Pro (393×852 points)
 - **设计规范**: iOS Human Interface Guidelines
 
-## 文件结构
+## 项目结构
 
 ```
 UI/
-├── index.html              # 主入口页面，展示所有原型界面
-├── user-home.html          # 用户端装修首页
-├── user-nearby.html        # 用户端附近装修工页面
-├── user-profile.html       # 用户端我的页面
-├── worker-home.html        # 装修工端地图首页
-├── worker-orders.html      # 装修工端订单管理页面
-├── worker-profile.html     # 装修工端我的页面
-├── app-data.json           # 应用数据配置文件
-└── README.md              # 项目说明文档
+├── index.html                 # 主入口页面，展示所有原型
+├── styles/
+│   ├── design-system.css     # 设计系统和通用样式
+│   └── config.json          # 样式配置数据
+├── user-home.html           # 用户端 - 装修首页
+├── user-nearby.html         # 用户端 - 附近页面  
+├── user-profile.html        # 用户端 - 个人中心
+├── worker-home.html         # 装修工端 - 地图首页
+├── worker-orders.html       # 装修工端 - 订单管理
+├── worker-profile.html      # 装修工端 - 个人中心
+└── README.md               # 项目文档
 ```
 
-## 设计特色
+## 页面功能说明
 
-### 1. 用户体验（UX）设计
-- **直观的交互流程**: 从下单到接单的完整流程设计
-- **清晰的信息架构**: 合理的界面层级和导航系统
-- **高效的用户操作**: 减少用户操作步骤，提升使用效率
+### 用户端界面
 
-### 2. 视觉设计
-- **现代化UI**: 采用iOS设计语言，界面简洁美观
-- **统一的设计风格**: 色彩搭配、排版规范、图标风格保持一致
-- **真实感设计**: 使用高质量图片资源，避免占位符图像
+#### 1. 装修首页 (user-home.html)
+- **核心功能**: 地图选点发布装修需求
+- **主要组件**:
+  - Google Maps地图容器
+  - 位置搜索和自动补全
+  - 底部抽屉式订单表单
+  - 装修类型选择器
+  - 预算范围滑块
+  - 照片上传组件
+- **交互流程**: 地图选点 → 填写需求 → 上传照片 → 提交订单
 
-### 3. 技术实现
-- **响应式布局**: 适配不同屏幕尺寸
-- **模块化设计**: 代码结构清晰，便于维护和扩展
-- **性能优化**: 轻量级实现，快速加载
+#### 2. 附近页面 (user-nearby.html)
+- **核心功能**: 浏览附近装修工信息
+- **主要组件**:
+  - 装修工列表卡片
+  - 筛选功能面板
+  - 装修工详情模态框
+  - 作品展示轮播
+  - 收藏和联系功能
+- **交互流程**: 浏览列表 → 查看详情 → 收藏/联系
 
-## 使用方法
+#### 3. 个人中心 (user-profile.html)
+- **核心功能**: 订单管理和账户设置
+- **主要组件**:
+  - 用户信息展示
+  - 订单状态标签页
+  - 订单详情查看
+  - 收藏装修工管理
+  - 账户设置表单
+- **交互流程**: 查看订单 → 管理收藏 → 设置账户
 
-### 1. 本地预览
-1. 确保所有文件都在`UI`目录下
-2. 使用现代浏览器打开`index.html`
-3. 查看所有原型界面的展示效果
+### 装修工端界面
 
-### 2. 真机预览
-1. 将项目部署到Web服务器
-2. 在移动设备上访问
-3. 体验真实的移动端交互效果
+#### 1. 地图首页 (worker-home.html)
+- **核心功能**: 地图查看和接单
+- **主要组件**:
+  - 订单标记地图
+  - 筛选条件面板
+  - 订单详情卡片
+  - 接单操作按钮
+  - 统计数据展示
+- **交互流程**: 查看订单 → 筛选条件 → 接单操作
 
-### 3. 开发参考
-- 查看`app-data.json`了解数据结构
-- 参考各HTML文件的代码实现
-- 遵循现有的设计规范和代码风格
+#### 2. 订单管理 (worker-orders.html)
+- **核心功能**: 订单状态管理和进度更新
+- **主要组件**:
+  - 订单状态标签页
+  - 订单列表卡片
+  - 进度更新模态框
+  - 客户沟通界面
+  - 施工照片上传
+- **交互流程**: 管理订单 → 更新进度 → 完成验收
 
-## 设计规范
+#### 3. 个人中心 (worker-profile.html)
+- **核心功能**: 资质展示和收入统计
+- **主要组件**:
+  - 个人资质卡片
+  - 收入统计图表
+  - 作品集管理
+  - 客户评价展示
+  - 账户设置
+- **交互流程**: 展示资质 → 管理作品 → 查看收入
 
-### 色彩系统
-- **主色调**: #007AFF (蓝色)
-- **辅助色**: #34C759 (绿色)
-- **警告色**: #FF9500 (橙色)
-- **危险色**: #FF3B30 (红色)
-- **背景色**: #F2F2F7 (浅灰)
+## 设计系统
+
+### 色彩规范
+```css
+--primary-color: #007AFF;    /* iOS蓝 - 主色调 */
+--success-color: #34C759;    /* 绿色 - 成功状态 */
+--warning-color: #FF3B30;    /* 红色 - 警告状态 */
+--neutral-color: #8E8E93;    /* 灰色 - 次要信息 */
+--background-color: #F2F2F7; /* 浅灰 - 背景色 */
+--surface-color: #FFFFFF;    /* 白色 - 卡片背景 */
+```
 
 ### 字体规范
-- **主字体**: system-ui, -apple-system, sans-serif
-- **字号层级**: xs(12px) → sm(14px) → base(16px) → lg(18px) → xl(20px) → 2xl(24px) → 3xl(30px)
+- **字体族**: SF Pro Display/Text, -apple-system
+- **标题**: 24-32px, 粗体
+- **副标题**: 18-20px, 中等
+- **正文**: 16px, 常规
+- **说明**: 12-14px, 常规
 
 ### 间距规范
-- **基础间距**: 4px, 8px, 12px, 16px, 20px, 24px, 32px
-- **组件间距**: 使用Tailwind CSS的间距系统
+- **页面边距**: 16px
+- **组件间距**: 12px
+- **内容间距**: 8px
+- **按钮高度**: 44px (符合iOS触摸标准)
 
-## 注意事项
+### 圆角规范
+- **设备圆角**: 39px (iPhone 16 Pro)
+- **卡片圆角**: 12px
+- **按钮圆角**: 8px
+- **输入框圆角**: 8px
 
-1. **Google Maps API**: 需要配置有效的API密钥才能正常显示地图
-2. **图片资源**: 使用Unsplash的CDN图片，确保网络连接正常
-3. **浏览器兼容性**: 建议使用Chrome、Safari、Firefox等现代浏览器
-4. **移动端优化**: 原型已针对移动端进行优化，建议在移动设备上体验
+## 响应式设计
+
+### iPhone 16 Pro适配
+- **屏幕尺寸**: 393×852 points
+- **安全区域**: 顶部44px，底部34px
+- **标签栏高度**: 83px
+- **导航栏高度**: 44px
+
+### 关键适配点
+1. **安全区域处理**: 所有内容避开刘海和底部指示器
+2. **触摸区域**: 最小44×44px触摸目标
+3. **圆角设计**: 39px设备圆角模拟真机效果
+4. **状态栏**: 44px高度预留空间
+
+## 交互设计
+
+### 动画效果
+- **页面转场**: 淡入淡出，300ms
+- **模态框**: 从底部滑入，400ms
+- **按钮反馈**: 缩放效果，100ms
+- **加载状态**: 骨架屏和进度指示
+
+### 微交互
+- **悬停效果**: 卡片阴影变化
+- **点击反馈**: 按钮缩放和颜色变化
+- **状态切换**: 平滑过渡动画
+- **成功反馈**: 绿色对勾动画
+
+## 数据模型
+
+### 用户模型
+```javascript
+{
+  userId: "string",
+  userType: "customer|worker",
+  profile: {
+    name: "string",
+    avatar: "string",
+    phone: "string",
+    location: { lat: number, lng: number, address: "string" }
+  },
+  verification: { isVerified: boolean }
+}
+```
+
+### 订单模型
+```javascript
+{
+  orderId: "string",
+  customerId: "string",
+  workerId: "string|null",
+  status: "pending|accepted|in_progress|completed",
+  location: { lat: number, lng: number, address: "string" },
+  details: {
+    renovationType: "kitchen|bathroom|living_room|bedroom|full_house",
+    budget: "1-5w|5-10w|10-20w|20w+",
+    description: "string",
+    photos: ["string"]
+  }
+}
+```
+
+## API集成说明
+
+### Google Maps API
+- **API密钥**: 需要配置有效的Google Maps API密钥
+- **所需服务**: Maps JavaScript API, Places API
+- **功能**: 地图显示、地址搜索、地理编码
+
+### 模拟数据
+当前所有数据都是模拟数据，包括：
+- 用户信息
+- 订单列表
+- 装修工信息
+- 评价数据
+- 作品集数据
+
+## 部署说明
+
+### 本地运行
+1. 确保所有文件在同一目录下
+2. 配置Google Maps API密钥
+3. 使用本地服务器运行（如Live Server）
+4. 访问index.html查看完整原型
+
+### 生产部署
+1. 上传所有文件到Web服务器
+2. 确保HTTPS协议（Google Maps要求）
+3. 配置正确的API密钥和域名限制
+4. 测试所有页面功能
+
+## React Native迁移指南
+
+### 组件映射
+- **HTML元素** → **React Native组件**
+- `<div>` → `<View>`
+- `<span>`, `<p>` → `<Text>`
+- `<input>` → `<TextInput>`
+- `<button>` → `<TouchableOpacity>`
+- `<img>` → `<Image>`
+
+### 样式迁移
+- **CSS样式** → **StyleSheet对象**
+- **Flexbox布局**: 直接迁移
+- **绝对定位**: 需要调整
+- **媒体查询**: 使用Dimensions API
+
+### 导航结构
+```javascript
+// 建议使用React Navigation
+const UserStack = createBottomTabNavigator({
+  Home: UserHomeScreen,
+  Nearby: UserNearbyScreen,
+  Profile: UserProfileScreen
+});
+
+const WorkerStack = createBottomTabNavigator({
+  Map: WorkerHomeScreen,
+  Orders: WorkerOrdersScreen,
+  Profile: WorkerProfileScreen
+});
+```
+
+### 地图集成
+```javascript
+// 使用react-native-maps
+import MapView, { Marker } from 'react-native-maps';
+
+<MapView
+  style={styles.map}
+  initialRegion={region}
+  onPress={handleMapPress}
+>
+  {orders.map(order => (
+    <Marker
+      key={order.id}
+      coordinate={order.location}
+      onPress={() => showOrderDetail(order)}
+    />
+  ))}
+</MapView>
+```
+
+### 状态管理建议
+- **Redux Toolkit**: 全局状态管理
+- **React Query**: 服务端状态管理
+- **AsyncStorage**: 本地数据持久化
+
+## 性能优化建议
+
+### 图片优化
+- 使用WebP格式
+- 实现懒加载
+- 添加占位符
+
+### 代码优化
+- 组件懒加载
+- 虚拟滚动
+- 防抖节流
+
+### 网络优化
+- API请求缓存
+- 离线功能支持
+- 错误重试机制
+
+## 测试建议
+
+### 功能测试
+- [ ] 所有页面正常加载
+- [ ] 地图功能正常
+- [ ] 表单提交验证
+- [ ] 模态框交互
+- [ ] 标签页切换
+
+### 兼容性测试
+- [ ] Safari浏览器
+- [ ] Chrome浏览器
+- [ ] 移动端Safari
+- [ ] 不同屏幕尺寸
+
+### 用户体验测试
+- [ ] 加载速度
+- [ ] 动画流畅度
+- [ ] 触摸响应
+- [ ] 错误处理
 
 ## 后续开发建议
 
-1. **后端集成**: 连接真实的后端API服务
-2. **实时通信**: 集成WebSocket实现实时聊天功能
-3. **推送通知**: 添加订单状态变更通知
-4. **支付集成**: 集成第三方支付服务
-5. **数据分析**: 添加用户行为分析功能
+### 短期优化
+1. 添加真实API接口
+2. 实现用户认证系统
+3. 添加推送通知
+4. 优化地图性能
 
-## 联系方式
+### 长期规划
+1. 支付系统集成
+2. 实时聊天功能
+3. 评价系统完善
+4. 数据分析面板
 
-如有任何问题或建议，请联系开发团队。
+## 联系信息
+
+如有技术问题或需要进一步说明，请联系开发团队。
 
 ---
 
-*本项目仅作为原型设计，实际开发时需要根据具体需求进行调整和完善。* 
+**版本**: 1.0.0  
+**最后更新**: 2024年1月  
+**维护团队**: 前端开发组
