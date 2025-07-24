@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>装修工我的</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007AFF',
+                        secondary: '#34C759',
+                        danger: '#FF3B30',
+                        warning: '#FF9500',
+                        background: '#F2F2F7'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .stats-card {
+            transition: transform 0.2s ease-in-out;
+        }
+        .stats-card:hover {
+            transform: translateY(-2px);
+        }
+        .case-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .rating-stars {
+            display: inline-flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="bg-background h-screen">
+    <!-- 用户信息头部 -->
+    <div class="bg-white px-4 py-6">
+        <div class="flex items-center space-x-4">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" 
+                 alt="装修工头像" class="w-16 h-16 rounded-full object-cover">
+            <div class="flex-1">
+                <h2 class="font-semibold text-gray-800 text-lg">张师傅</h2>
+                <p class="text-sm text-gray-500">专业装修15年</p>
+                <div class="flex items-center space-x-2 mt-1">
+                    <div class="rating-stars">
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="fas fa-star text-warning text-sm"></i>
+                        <i class="fas fa-star text-warning text-sm"></i>
+                    </div>
+                    <span class="text-sm text-gray-500">4.8 (128评价)</span>
+                </div>
+            </div>
+            <i class="fas fa-chevron-right text-gray-400"></i>
+        </div>
+    </div>
+
+    <!-- 收入统计 -->
+    <div class="bg-white mt-2 px-4 py-4">
+        <h3 class="font-semibold text-gray-800 mb-3">收入统计</h3>
+        <div class="grid grid-cols-3 gap-4 text-center">
+            <div class="stats-card">
+                <div class="text-2xl font-bold text-primary">¥28.5万</div>
+                <div class="text-xs text-gray-500 mt-1">本月收入</div>
+            </div>
+            <div class="stats-card">
+                <div class="text-2xl font-bold text-secondary">¥156万</div>
+                <div class="text-xs text-gray-500 mt-1">总收入</div>
+            </div>
+            <div class="stats-card">
+                <div class="text-2xl font-bold text-warning">18</div>
+                <div class="text-xs text-gray-500 mt-1">本月订单</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 个人资质 -->
+    <div class="bg-white mt-2 px-4 py-4">
+        <h3 class="font-semibold text-gray-800 mb-3">个人资质</h3>
+        <div class="space-y-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-certificate text-primary"></i>
+                    <span class="text-sm text-gray-800">装修资质证书</span>
+                </div>
+                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">已认证</span>
+            </div>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-shield-alt text-primary"></i>
+                    <span class="text-sm text-gray-800">安全认证</span>
+                </div>
+                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">已认证</span>
+            </div>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-medal text-primary"></i>
+                    <span class="text-sm text-gray-800">专业技能认证</span>
+                </div>
+                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">已认证</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 客户评价 -->
+    <div class="bg-white mt-2 px-4 py-4">
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="font-semibold text-gray-800">客户评价</h3>
+            <span class="text-sm text-primary">查看全部</span>
+        </div>
+        <div class="space-y-3">
+            <div class="border-b border-gray-100 pb-3">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-2">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" 
+                             alt="客户头像" class="w-8 h-8 rounded-full object-cover">
+                        <span class="text-sm font-medium text-gray-800">张女士</span>
+                    </div>
+                    <div class="rating-stars">
+                        <i class="fas fa-star text-warning text-xs"></i>
+                        <i class="fas fa-star text-warning text-xs"></i>
+                        <i class="fas fa-star text-warning text-xs"></i>
+                        <i class="fas fa-star text-warning text-xs"></i>
+                        <i class="fas fa-star text-warning text-xs"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600">师傅很专业，施工质量很好，工期也按时完成，非常满意！</p>
+                <p class="text-xs text-gray-500 mt-1">2024-01-10</p>
+            </div>
+            <div class="border-b border-gray-100 pb-3">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center space-x-2">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" 
+                             alt="客户头像" class="w-8 h-8 rounded-full object-cover">
+                        <span class="text-sm font-medium text-gray-800">李先生</span>
+                    </div>
+                    <div class="rating-stars">
+                        <i class="fas fa-star text-warning text-xs"></i>
+                        <i class="fas fa-star text-warning text-xs"></i>
+                        <i class="fas fa-star text-warning text-xs"></i>
+                        <i class="fas fa-star text-warning text-xs"></i>
+                        <i class="far fa-star text-warning text-xs"></i>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600">工作认真负责，沟通顺畅，推荐！</p>
+                <p class="text-xs text-gray-500 mt-1">2024-01-05</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 装修案例 -->
+    <div class="bg-white mt-2 px-4 py-4">
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="font-semibold text-gray-800">装修案例</h3>
+            <span class="text-sm text-primary">查看全部</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+            <div class="space-y-2">
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=200&h=120&fit=crop" 
+                     alt="案例1" class="case-image">
+                <p class="text-sm text-gray-800">现代简约客厅</p>
+                <p class="text-xs text-gray-500">预算: ¥12万</p>
+            </div>
+            <div class="space-y-2">
+                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=120&fit=crop" 
+                     alt="案例2" class="case-image">
+                <p class="text-sm text-gray-800">北欧风格厨房</p>
+                <p class="text-xs text-gray-500">预算: ¥8万</p>
+            </div>
+            <div class="space-y-2">
+                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=200&h=120&fit=crop" 
+                     alt="案例3" class="case-image">
+                <p class="text-sm text-gray-800">轻奢卫生间</p>
+                <p class="text-xs text-gray-500">预算: ¥3万</p>
+            </div>
+            <div class="space-y-2">
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=200&h=120&fit=crop" 
+                     alt="案例4" class="case-image">
+                <p class="text-sm text-gray-800">温馨卧室</p>
+                <p class="text-xs text-gray-500">预算: ¥6万</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 功能菜单 -->
+    <div class="bg-white mt-2 px-4 py-4">
+        <div class="space-y-4">
+            <div class="flex items-center justify-between py-2">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-wallet text-primary"></i>
+                    <span class="text-gray-800">我的钱包</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="flex items-center justify-between py-2">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-certificate text-primary"></i>
+                    <span class="text-gray-800">资质管理</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="flex items-center justify-between py-2">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-cog text-primary"></i>
+                    <span class="text-gray-800">账户设置</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+            <div class="flex items-center justify-between py-2">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-headset text-primary"></i>
+                    <span class="text-gray-800">客服帮助</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bg-white border-t border-gray-200 px-4 py-2 flex items-center justify-around">
+        <div class="flex flex-col items-center py-2">
+            <i class="fas fa-map text-gray-400 text-lg"></i>
+            <span class="text-xs text-gray-400 mt-1">地图</span>
+        </div>
+        <div class="flex flex-col items-center py-2">
+            <i class="fas fa-clipboard-list text-gray-400 text-lg"></i>
+            <span class="text-xs text-gray-400 mt-1">订单</span>
+        </div>
+        <div class="flex flex-col items-center py-2">
+            <i class="fas fa-user text-primary text-lg"></i>
+            <span class="text-xs text-primary mt-1">我的</span>
+        </div>
+    </div>
+
+    <script>
+        // 可以添加一些交互功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为可点击元素添加点击事件
+            const clickableElements = document.querySelectorAll('.flex.items-center.justify-between');
+            clickableElements.forEach(element => {
+                element.addEventListener('click', function() {
+                    // 这里可以添加具体的点击处理逻辑
+                    console.log('点击了:', this.querySelector('span').textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
