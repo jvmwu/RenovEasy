@@ -4,108 +4,181 @@
  */
 
 import React, { useState } from 'react';
-import { StatusBar, useColorScheme, View, Text, ScrollView } from 'react-native';
+import { StatusBar, useColorScheme, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Provider } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { store } from '@/store';
-import { Button, Card, Input, NavigationBar } from '@/components';
-import { colors, spacing } from '@/styles';
-import './global.css'
+import { useAppDispatch, useAuth } from '@/hooks';
+import { loginSuccess } from '@/store';
+import './global.css';
+
+// 创建 React Query 客户端
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (替换 cacheTime)
+    },
+  },
+});
+
+// 内部组件：状态管理测试
+function StateManagementDemo() {
+  const dispatch = useAppDispatch();
+  const auth = useAuth();
+  const [counter, setCounter] = useState(0);
+
+  const handleLogin = () => {
+    dispatch(loginSuccess({
+      token: 'demo-token-' + Date.now(),
+      refreshToken: 'demo-refresh-token',
+      userType: 'user',
+      userId: 'demo-user-123',
+    }));
+  };
+
+  const handleLogout = () => {
+    dispatch({ type: 'auth/logout' });
+  };
+
+  return (
+    <ScrollView className="flex-1 bg-slate-50">
+      <View className="flex-1 justify-center items-center p-6">
+        {/* 主标题卡片 */}
+        <View className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-sm mb-6">
+          <Text className="text-3xl font-bold text-slate-800 text-center mb-2">
+            RenovEasy
+          </Text>
+          <Text className="text-lg text-slate-600 text-center mb-6">
+            装修服务平台
+          </Text>
+          <Text className="text-base text-slate-700 text-center leading-6">
+            项目架构已搭建完成，准备开始开发！
+          </Text>
+        </View>
+
+        {/* 状态展示卡片 */}
+        <View className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-sm mb-6">
+          <Text className="text-lg font-semibold text-slate-800 mb-4 text-center">
+            系统状态
+          </Text>
+
+          <View className="space-y-2">
+            <Text className="text-sm text-green-500 text-center font-medium">
+              ✅ Redux Store 已连接
+            </Text>
+            <Text className="text-sm text-blue-500 text-center font-medium">
+              ✅ 设计系统已完成
+            </Text>
+            <Text className="text-sm text-green-500 text-center font-medium">
+              ✅ SafeAreaProvider 已修复
+            </Text>
+            <Text className="text-sm text-blue-500 text-center font-medium">
+              ✅ React Query 已集成
+            </Text>
+            <Text className="text-sm text-green-500 text-center font-medium">
+              ✅ 状态管理架构完成
+            </Text>
+            <Text className="text-sm text-purple-500 text-center font-medium">
+              ✅ NativeWind 正常工作
+            </Text>
+          </View>
+        </View>
+
+        {/* 状态管理测试卡片 */}
+        <View className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-sm mb-6">
+          <Text className="text-lg font-semibold text-slate-800 mb-4 text-center">
+            状态管理测试
+          </Text>
+
+          {/* 认证状态 */}
+          <View className="mb-4">
+            <Text className="text-sm text-slate-600 mb-2">
+              认证状态: {auth.isAuthenticated ? '已登录' : '未登录'}
+            </Text>
+            {auth.isAuthenticated && (
+              <View className="bg-green-50 p-2 rounded-lg">
+                <Text className="text-xs text-green-700">
+                  用户类型: {auth.userType}
+                </Text>
+                <Text className="text-xs text-green-700">
+                  用户ID: {auth.userId}
+                </Text>
+              </View>
+            )}
+          </View>
+
+          {/* 计数器测试 */}
+          <View className="mb-4">
+            <Text className="text-sm text-slate-600 mb-2">
+              本地状态计数器: {counter}
+            </Text>
+            <TouchableOpacity
+              className="bg-purple-500 py-2 px-4 rounded-lg"
+              onPress={() => setCounter(c => c + 1)}
+            >
+              <Text className="text-white text-center font-medium">
+                增加计数
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* 认证操作按钮 */}
+          <View className="space-y-3">
+            {!auth.isAuthenticated ? (
+              <TouchableOpacity
+                className="bg-blue-500 py-3 px-6 rounded-lg"
+                onPress={handleLogin}
+              >
+                <Text className="text-white text-center font-semibold">
+                  模拟登录
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                className="bg-red-500 py-3 px-6 rounded-lg"
+                onPress={handleLogout}
+              >
+                <Text className="text-white text-center font-semibold">
+                  退出登录
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+
+        {/* NativeWind 样式测试 */}
+        <View className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-6 w-full max-w-sm">
+          <Text className="text-white text-center font-bold text-lg mb-2">
+            NativeWind 测试
+          </Text>
+          <Text className="text-white/80 text-center text-sm">
+            渐变背景、圆角、阴影等样式正常工作
+          </Text>
+        </View>
+      </View>
+    </ScrollView>
+  );
+}
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-  const [inputValue, setInputValue] = useState('');
 
   return (
-    <Provider store={store}>
-      <SafeAreaProvider>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor="transparent"
-          translucent
-        />
-        
-        <View style={{ flex: 1, backgroundColor: colors.background.secondary }}>
-          {/* 导航栏 */}
-          <NavigationBar
-            title="RenovEasy"
-            leftButton={{
-              text: '返回',
-              onPress: () => console.log('返回'),
-            }}
-            rightButton={{
-              text: '设置',
-              onPress: () => console.log('设置'),
-            }}
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <SafeAreaProvider>
+          <StatusBar
+            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            backgroundColor="transparent"
+            translucent
           />
-
-          {/* 内容区域 */}
-          <ScrollView
-            style={{ flex: 1 }}
-            contentContainerStyle={{
-              padding: spacing[4],
-              gap: spacing[4],
-            }}
-          >
-            {/* 欢迎卡片 */}
-            <Card variant="elevated">
-              <Text className="text-2xl font-bold text-slate-800 mb-2">RenovEasy</Text>
-              <Text className="text-base text-slate-600 mb-4">装修服务平台</Text>
-              <Text className="text-sm text-green-500 mb-2">✅ Redux Store 已连接</Text>
-              <Text className="text-sm text-blue-500 mb-2">✅ NativeWind 已配置</Text>
-              <Text className="text-sm text-purple-500">✅ UI 组件系统已完成</Text>
-            </Card>
-
-            {/* 按钮展示 */}
-            <Card>
-              <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: spacing[3], color: colors.text.primary }}>
-                按钮组件
-              </Text>
-              <View style={{ gap: spacing[2] }}>
-                <Button title="主要按钮" variant="primary" onPress={() => console.log('主要按钮')} />
-                <Button title="次要按钮" variant="secondary" onPress={() => console.log('次要按钮')} />
-                <Button title="轮廓按钮" variant="outline" onPress={() => console.log('轮廓按钮')} />
-                <Button title="加载中..." variant="primary" loading onPress={() => {}} />
-              </View>
-            </Card>
-
-            {/* 输入框展示 */}
-            <Card>
-              <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: spacing[3], color: colors.text.primary }}>
-                输入框组件
-              </Text>
-              <View style={{ gap: spacing[3] }}>
-                <Input
-                  label="用户名"
-                  placeholder="请输入用户名"
-                  value={inputValue}
-                  onChangeText={setInputValue}
-                  required
-                />
-                <Input
-                  label="密码"
-                  placeholder="请输入密码"
-                  secureTextEntry
-                  variant="filled"
-                />
-                <Input
-                  placeholder="搜索..."
-                  variant="outline"
-                  error="这是一个错误提示"
-                />
-              </View>
-            </Card>
-
-            {/* 状态信息 */}
-            <Card variant="filled">
-              <Text style={{ fontSize: 16, color: colors.text.secondary, textAlign: 'center' }}>
-                设计系统和 UI 基础组件已完成！
-              </Text>
-            </Card>
-          </ScrollView>
-        </View>
-      </SafeAreaProvider>
-    </Provider>
+          <StateManagementDemo />
+        </SafeAreaProvider>
+      </Provider>
+    </QueryClientProvider>
   );
 }
 

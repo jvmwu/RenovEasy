@@ -16,7 +16,7 @@
   - 实现 iOS 风格的导航栏和标签栏组件
   - _Requirements: 1.3, 10.1, 10.2_
 
-- [ ] 3. 状态管理和数据层架构
+- [x] 3. 状态管理和数据层架构
 
   - 配置 Redux Toolkit store 和基础 slice 结构
   - 集成 React Query 进行服务端状态管理
