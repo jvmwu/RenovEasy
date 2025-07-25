@@ -9,7 +9,7 @@ export const navigationRef = React.createRef<NavigationContainerRef<RootStackPar
 export const NavigationUtils = {
   // 导航到指定路由
   navigate: (name: keyof RootStackParamList, params?: any) => {
-    navigationRef.current?.navigate(name as never, params as never);
+    navigationRef.current?.navigate(name, params);
   },
 
   // 返回上一页

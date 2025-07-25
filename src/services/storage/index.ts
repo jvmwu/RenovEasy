@@ -59,7 +59,7 @@ class StorageService {
   /**
    * 获取所有键
    */
-  async getAllKeys(): Promise<string[]> {
+  async getAllKeys(): Promise<readonly string[]> {
     try {
       return await AsyncStorage.getAllKeys();
     } catch (error) {
@@ -80,7 +80,7 @@ class StorageService {
     }
   }
 
-  async multiGet(keys: string[]): Promise<[string, string | null][]> {
+  async multiGet(keys: string[]): Promise<readonly [string, string | null][]> {
     try {
       return await AsyncStorage.multiGet(keys);
     } catch (error) {

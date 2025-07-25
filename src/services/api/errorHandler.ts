@@ -217,7 +217,7 @@ export class RetryExecutor {
           : delay;
 
         // 等待后重试
-        await new Promise(resolve => setTimeout(resolve, retryDelay));
+        await new Promise(resolve => setTimeout(() => resolve(undefined), retryDelay));
       }
     }
 

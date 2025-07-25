@@ -156,7 +156,12 @@ export const Button: React.FC<ButtonProps> = ({
       ) : (
         <>
           {leftIcon && <>{leftIcon}</>}
-          <Text style={[getTextStyle(), textStyle, leftIcon && { marginLeft: spacing[2] }, rightIcon && { marginRight: spacing[2] }]}>
+          <Text style={[
+            getTextStyle(),
+            textStyle,
+            leftIcon ? { marginLeft: spacing[2] } : undefined,
+            rightIcon ? { marginRight: spacing[2] } : undefined
+          ]}>
             {title}
           </Text>
           {rightIcon && <>{rightIcon}</>}
