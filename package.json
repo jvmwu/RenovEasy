@@ -20,6 +20,7 @@
     "nativewind": "^4.1.23",
     "react": "19.1.0",
     "react-native": "0.80.1",
+    "react-native-gesture-handler": "^2.27.2",
     "react-native-image-picker": "^8.2.1",
     "react-native-maps": "^1.24.10",
     "react-native-reanimated": "^3.19.0",

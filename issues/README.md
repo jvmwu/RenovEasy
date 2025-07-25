@@ -11,7 +11,7 @@
 - [NativeWind 样式不生效问题](./nativewind-styles-not-working.md) - CSS 导入配置问题
 
 ### 依赖管理
-- 待添加...
+- [React Navigation 缺少 gesture-handler 依赖](./react-navigation-gesture-handler-missing.md) - 导航依赖配置问题
 
 ### 性能优化
 - 待添加...
