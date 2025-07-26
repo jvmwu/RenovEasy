@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
-  View,
   Text,
-  TouchableOpacity,
-  StatusBar,
-  ViewStyle,
+  View,
   TextStyle,
-  Platform,
+  ViewStyle,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors, textStyles, spacing, shadows } from '@/styles';
+import { colors, layoutStyles, shadows, spacing, textStyles } from '@/styles';
 
 export interface NavigationBarProps {
   title?: string;
@@ -44,43 +44,26 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   style,
   titleStyle,
 }) => {
+
   const insets = useSafeAreaInsets();
 
-  const containerStyle: ViewStyle = {
+  // 使用 useMemo 缓存动态样式计算
+  const containerStyle = useMemo((): ViewStyle => ({
+    ...styles.container,
     backgroundColor: translucent ? 'transparent' : backgroundColor,
     paddingTop: translucent ? 0 : insets.top,
     ...(showShadow && shadows.sm),
-  };
+  }), [translucent, backgroundColor, insets.top, showShadow]);
 
-  const navBarStyle: ViewStyle = {
-    height: 44,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: spacing[4],
-  };
-
-  const buttonStyle: ViewStyle = {
-    minWidth: 44,
-    height: 44,
-    justifyContent: 'center',
-    alignItems: 'center',
-  };
-
-  const buttonTextStyle: TextStyle = {
-    ...textStyles.button,
+  const buttonTextStyle = useMemo((): TextStyle => ({
+    ...styles.buttonText,
     color: buttonColor,
-    fontSize: 17, // iOS 标准字体大小
-  };
+  }), [buttonColor]);
 
-  const titleTextStyle: TextStyle = {
-    ...textStyles.navTitle,
+  const titleTextStyle = useMemo((): TextStyle => ({
+    ...styles.titleText,
     color: titleColor,
-    fontSize: 17, // iOS 标准字体大小
-    fontWeight: '600',
-    textAlign: 'center',
-    flex: 1,
-  };
+  }), [titleColor]);
 
   return (
     <>
@@ -91,12 +74,12 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         />
       )}
       <View style={[containerStyle, style]}>
-        <View style={navBarStyle}>
+        <View style={styles.navbar}>
           {/* 左侧按钮 */}
-          <View style={{ width: 80, alignItems: 'flex-start' }}>
+          <View style={styles.leftButtonContainer}>
             {leftButton && (
               <TouchableOpacity
-                style={buttonStyle}
+                style={styles.button}
                 onPress={leftButton.onPress}
                 activeOpacity={0.6}
               >
@@ -117,10 +100,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
           )}
 
           {/* 右侧按钮 */}
-          <View style={{ width: 80, alignItems: 'flex-end' }}>
+          <View style={styles.rightButtonContainer}>
             {rightButton && (
               <TouchableOpacity
-                style={buttonStyle}
+                style={styles.button}
                 onPress={rightButton.onPress}
                 activeOpacity={0.6}
               >
@@ -136,4 +119,49 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
       </View>
     </>
   );
+
 };
+
+// 静态样式定义
+const styles = StyleSheet.create({
+  // 导航栏容器
+  container: {
+    ...shadows.sm,
+  },
+  // 导航栏主体
+  navbar: {
+    height: 44,
+    ...layoutStyles.row,
+    ...layoutStyles.centerVertical,
+    ...layoutStyles.spaceBetween,
+    paddingHorizontal: spacing[4],
+  },
+  // 按钮样式
+  button: {
+    minWidth: 44,
+    height: 44,
+    ...layoutStyles.center,
+  },
+  // 按钮容器
+  leftButtonContainer: {
+    width: 80,
+    ...layoutStyles.alignStart,
+  },
+  rightButtonContainer: {
+    width: 80,
+    ...layoutStyles.alignEnd,
+  },
+  // 按钮文本样式
+  buttonText: {
+    ...textStyles.button,
+    fontSize: 17, // iOS 标准字体大小
+  },
+  // 标题样式
+  titleText: {
+    ...textStyles.navTitle,
+    ...layoutStyles.flex1,
+    fontSize: 17, // iOS 标准字体大小
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+});

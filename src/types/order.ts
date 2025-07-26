@@ -1,7 +1,7 @@
 // 订单相关类型定义
-import { Location, FileUpload } from './common';
 import { User } from './user';
 import { Worker } from './worker';
+import { Location, FileUpload } from './common';
 
 export type OrderStatus = 
   | 'pending'      // 待接单

@@ -13,7 +13,7 @@ export interface LoginRequest {
  * 登录响应数据
  */
 export interface LoginResponse {
-  user: User;
+  user: AuthUser;
   token: string;
   refreshToken: string;
 }
@@ -35,7 +35,7 @@ export interface RegisterRequest {
  * 注册响应数据
  */
 export interface RegisterResponse {
-  user: User;
+  user: AuthUser;
   token: string;
   refreshToken: string;
 }
@@ -73,9 +73,9 @@ export interface RefreshTokenResponse {
 }
 
 /**
- * 用户基础信息
+ * 认证用户基础信息
  */
-export interface User {
+export interface AuthUser {
   id: string;
   phone: string;
   name?: string;
@@ -91,7 +91,7 @@ export interface User {
  */
 export interface AuthState {
   isAuthenticated: boolean;
-  user: User | null;
+  user: AuthUser | null;
   token: string | null;
   refreshToken: string | null;
   loading: boolean;

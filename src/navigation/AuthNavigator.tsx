@@ -1,10 +1,10 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { AuthStackParamList } from './types';
-import { useAppDispatch } from '@/hooks';
+import { createStackNavigator } from '@react-navigation/stack';
 import { loginSuccess } from '@/store';
+import { useAppDispatch } from '@/hooks';
 import { storageService } from '@/services';
+import { AuthStackParamList } from './types';
 
 const Stack = createStackNavigator<AuthStackParamList>();
 
@@ -88,6 +88,7 @@ function PhoneInputScreen({ navigation }: any) {
 }
 
 function VerificationCodeScreen({ navigation, route }: any) {
+  
   const { phone, type } = route.params;
 
   return (

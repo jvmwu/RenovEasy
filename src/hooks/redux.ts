@@ -1,4 +1,8 @@
-import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
+import { 
+  useDispatch, 
+  useSelector, 
+  TypedUseSelectorHook 
+} from 'react-redux';
 import type { RootState, AppDispatch } from '@/store';
 
 // 使用类型化的 hooks
@@ -15,11 +19,32 @@ export const useIsAuthenticated = () => {
 };
 
 export const useUserType = () => {
-  return useAppSelector((state) => state.auth.userType);
+  return useAppSelector((state) => state.auth.user?.userType);
 };
 
 export const useUserId = () => {
-  return useAppSelector((state) => state.auth.userId);
+  return useAppSelector((state) => state.auth.user?.id);
+};
+
+export const useCurrentUser = () => {
+  return useAppSelector((state) => state.auth.user);
+};
+
+export const useAuthLoading = () => {
+  return useAppSelector((state) => state.auth.loading);
+};
+
+export const useAuthError = () => {
+  return useAppSelector((state) => state.auth.error);
+};
+
+// 便利的组合 hooks
+export const useIsUser = () => {
+  return useAppSelector((state) => state.auth.user?.userType === 'user');
+};
+
+export const useIsWorker = () => {
+  return useAppSelector((state) => state.auth.user?.userType === 'worker');
 };
 
 // 用户相关 hooks

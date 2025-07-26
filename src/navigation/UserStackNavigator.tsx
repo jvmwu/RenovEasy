@@ -1,6 +1,6 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { UserStackParamList } from './types';
 import { UserTabNavigator } from './UserTabNavigator';
 

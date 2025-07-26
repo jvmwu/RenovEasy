@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
-  Modal as RNModal,
   View,
+  ViewStyle,
+  StyleSheet,
+  Modal as RNModal,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  ViewStyle,
   ModalProps as RNModalProps,
 } from 'react-native';
-import { colors, spacing, borderRadius, shadows } from '@/styles';
+import { colors, spacing, borderRadius, shadows, layoutStyles } from '@/styles';
 
 export interface ModalProps extends Omit<RNModalProps, 'children'> {
   isVisible: boolean;
@@ -31,83 +32,41 @@ export const Modal: React.FC<ModalProps> = ({
   containerStyle,
   ...props
 }) => {
-  const getOverlayStyle = (): ViewStyle => {
-    const baseStyle: ViewStyle = {
-      flex: 1,
-      backgroundColor: colors.background.overlay,
-    };
 
-    const positionStyles: Record<typeof position, ViewStyle> = {
-      center: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: spacing[4],
-      },
-      bottom: {
-        justifyContent: 'flex-end',
-      },
-      top: {
-        justifyContent: 'flex-start',
-        paddingTop: spacing[12],
-      },
+  // 使用 useMemo 缓存动态样式计算
+  const overlayStyle = useMemo((): ViewStyle => {
+    const positionStyleMap = {
+      center: styles.positionCenter,
+      bottom: styles.positionBottom,
+      top: styles.positionTop,
     };
 
     return {
-      ...baseStyle,
-      ...positionStyles[position],
+      ...styles.overlay,
+      ...positionStyleMap[position],
     };
-  };
+  }, [position]);
 
-  const getModalStyle = (): ViewStyle => {
-    const baseStyle: ViewStyle = {
-      backgroundColor: colors.background.modal,
-      ...shadows.xl,
-    };
-
-    const sizeStyles: Record<typeof size, ViewStyle> = {
-      sm: {
-        maxWidth: 320,
-        width: '80%',
-      },
-      md: {
-        maxWidth: 400,
-        width: '90%',
-      },
-      lg: {
-        maxWidth: 600,
-        width: '95%',
-      },
-      full: {
-        width: '100%',
-        height: '100%',
-      },
+  const modalStyle = useMemo((): ViewStyle => {
+    const sizeStyleMap = {
+      sm: styles.sizeSmall,
+      md: styles.sizeMedium,
+      lg: styles.sizeLarge,
+      full: styles.sizeFull,
     };
 
-    const positionStyles: Record<typeof position, ViewStyle> = {
-      center: {
-        borderRadius: borderRadius['2xl'],
-        maxHeight: '80%',
-      },
-      bottom: {
-        borderTopLeftRadius: borderRadius['2xl'],
-        borderTopRightRadius: borderRadius['2xl'],
-        width: '100%',
-        maxHeight: '90%',
-      },
-      top: {
-        borderBottomLeftRadius: borderRadius['2xl'],
-        borderBottomRightRadius: borderRadius['2xl'],
-        width: '100%',
-        maxHeight: '80%',
-      },
+    const borderRadiusStyleMap = {
+      center: styles.borderRadiusCenter,
+      bottom: styles.borderRadiusBottom,
+      top: styles.borderRadiusTop,
     };
 
     return {
-      ...baseStyle,
-      ...sizeStyles[size],
-      ...positionStyles[position],
+      ...styles.container,
+      ...sizeStyleMap[size],
+      ...borderRadiusStyleMap[position],
     };
-  };
+  }, [size, position]);
 
   const handleBackdropPress = () => {
     if (closeOnBackdrop) {
@@ -124,43 +83,26 @@ export const Modal: React.FC<ModalProps> = ({
       {...props}
     >
       <TouchableWithoutFeedback onPress={handleBackdropPress}>
-        <View style={getOverlayStyle()}>
+        <View style={overlayStyle}>
           <TouchableWithoutFeedback>
-            <View style={[getModalStyle(), containerStyle]}>
+            <View style={[modalStyle, containerStyle]}>
               {showCloseButton && (
                 <TouchableOpacity
                   onPress={onClose}
-                  style={{
-                    position: 'absolute',
-                    top: spacing[3],
-                    right: spacing[3],
-                    zIndex: 1,
-                    width: 32,
-                    height: 32,
-                    borderRadius: 16,
-                    backgroundColor: colors.neutral[100],
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
+                  style={styles.closeButton}
                 >
                   {/* 这里可以放置关闭图标 */}
                   <View
-                    style={{
-                      width: 16,
-                      height: 2,
-                      backgroundColor: colors.neutral[600],
-                      transform: [{ rotate: '45deg' }],
-                      position: 'absolute',
-                    }}
+                    style={[
+                      styles.closeIconLine,
+                      styles.closeIconLine45
+                    ]}
                   />
                   <View
-                    style={{
-                      width: 16,
-                      height: 2,
-                      backgroundColor: colors.neutral[600],
-                      transform: [{ rotate: '-45deg' }],
-                      position: 'absolute',
-                    }}
+                    style={[
+                      styles.closeIconLine,
+                      styles.closeIconLineNeg45
+                    ]}
                   />
                 </TouchableOpacity>
               )}
@@ -172,3 +114,88 @@ export const Modal: React.FC<ModalProps> = ({
     </RNModal>
   );
 };
+
+// 静态样式定义
+const styles = StyleSheet.create({
+  // 遮罩层
+  overlay: {
+    flex: 1,
+    backgroundColor: colors.background.overlay,
+  },
+  // 位置样式
+  positionCenter: {
+    ...layoutStyles.center,
+    padding: spacing[4],
+  },
+  positionBottom: {
+    justifyContent: 'flex-end',
+  },
+  positionTop: {
+    justifyContent: 'flex-start',
+    paddingTop: spacing[12],
+  },
+  // 模态框容器
+  container: {
+    backgroundColor: colors.background.modal,
+    ...shadows.xl,
+  },
+  // 尺寸样式
+  sizeSmall: {
+    maxWidth: 320,
+    width: '80%',
+  },
+  sizeMedium: {
+    maxWidth: 400,
+    width: '90%',
+  },
+  sizeLarge: {
+    maxWidth: 600,
+    width: '95%',
+  },
+  sizeFull: {
+    width: '100%',
+    height: '100%',
+  },
+  // 边框半径样式
+  borderRadiusCenter: {
+    borderRadius: borderRadius['2xl'],
+    maxHeight: '80%',
+  },
+  borderRadiusBottom: {
+    borderTopLeftRadius: borderRadius['2xl'],
+    borderTopRightRadius: borderRadius['2xl'],
+    width: '100%',
+    maxHeight: '90%',
+  },
+  borderRadiusTop: {
+    borderBottomLeftRadius: borderRadius['2xl'],
+    borderBottomRightRadius: borderRadius['2xl'],
+    width: '100%',
+    maxHeight: '80%',
+  },
+  // 关闭按钮
+  closeButton: {
+    position: 'absolute',
+    top: spacing[3],
+    right: spacing[3],
+    zIndex: 1,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: colors.neutral[100],
+    ...layoutStyles.center,
+  },
+  // 关闭图标线条
+  closeIconLine: {
+    width: 16,
+    height: 2,
+    backgroundColor: colors.neutral[600],
+    position: 'absolute',
+  },
+  closeIconLine45: {
+    transform: [{ rotate: '45deg' }],
+  },
+  closeIconLineNeg45: {
+    transform: [{ rotate: '-45deg' }],
+  },
+});

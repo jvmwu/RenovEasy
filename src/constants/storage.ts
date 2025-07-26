@@ -6,6 +6,7 @@ export const STORAGE_KEYS = {
   REFRESH_TOKEN: '@RenovEasy:refreshToken',
   USER_TYPE: '@RenovEasy:userType',
   USER_ID: '@RenovEasy:userId',
+  USER_DATA: '@RenovEasy:userData',
   
   // 用户偏好
   THEME: '@RenovEasy:theme',

@@ -131,12 +131,21 @@ class StorageService {
     return this.getItem<string>(STORAGE_KEYS.USER_ID);
   }
 
+  async setUserData(user: any): Promise<void> {
+    return this.setItem(STORAGE_KEYS.USER_DATA, user);
+  }
+
+  async getUserData(): Promise<any | null> {
+    return this.getItem(STORAGE_KEYS.USER_DATA);
+  }
+
   async clearAuthData(): Promise<void> {
     const authKeys = [
       STORAGE_KEYS.AUTH_TOKEN,
       STORAGE_KEYS.REFRESH_TOKEN,
       STORAGE_KEYS.USER_TYPE,
       STORAGE_KEYS.USER_ID,
+      STORAGE_KEYS.USER_DATA,
     ];
     return this.multiRemove(authKeys);
   }

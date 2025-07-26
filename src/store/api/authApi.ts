@@ -1,5 +1,6 @@
 import { baseApi } from './baseApi';
 import { 
+  AuthUser,
   LoginRequest, 
   LoginResponse, 
   RegisterRequest, 
@@ -89,7 +90,7 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     // 获取当前用户信息
-    getCurrentUser: builder.query<LoginResponse['user'], void>({
+    getCurrentUser: builder.query<AuthUser, void>({
       query: () => ({
         url: '/auth/me',
         method: 'GET',

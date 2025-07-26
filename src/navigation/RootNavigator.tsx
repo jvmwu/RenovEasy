@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
+import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import { View, Text } from 'react-native';
+import { loginSuccess } from '@/store';
+import { storageService } from '@/services';
 import { RootStackParamList } from './types';
 import { AuthNavigator } from './AuthNavigator';
+import { navigationRef } from './navigationUtils';
 import { UserStackNavigator } from './UserStackNavigator';
 import { WorkerStackNavigator } from './WorkerStackNavigator';
-import { navigationRef } from './navigationUtils';
 import { useAuth, useAppDispatch } from '@/hooks';
-import { storageService } from '@/services';
-import { loginSuccess } from '@/store';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -28,6 +28,7 @@ function SplashScreen() {
 
 // 导航守卫组件
 function NavigationGuard({ children }: { children: React.ReactNode }) {
+
   const dispatch = useAppDispatch();
   const auth = useAuth();
   const [isLoading, setIsLoading] = React.useState(true);
@@ -92,7 +93,7 @@ function RootStackNavigator() {
             animationTypeForReplace: 'pop',
           }}
         />
-      ) : auth.userType === 'user' ? (
+      ) : auth.user?.userType === 'user' ? (
         // 用户端应用
         <Stack.Screen
           name="UserApp"
