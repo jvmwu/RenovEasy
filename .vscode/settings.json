@@ -1,2 +1,5 @@
 {
+   "npm.packageManager": "yarn",
+   "npm.enableRunFromFolder": true,
+   "typescript.preferences.includePackageJsonAutoImports": "on"
 }

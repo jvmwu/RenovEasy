@@ -1,27 +1,99 @@
-// 认证相关类型定义
+// 认证相关类型定义 - 符合API约束规范
 
-export interface LoginCredentials {
+/**
+ * 登录请求参数
+ */
+export interface LoginRequest {
   phone: string;
   password: string;
+  userType?: 'user' | 'worker';
 }
 
-export interface RegisterData {
+/**
+ * 登录响应数据
+ */
+export interface LoginResponse {
+  user: User;
+  token: string;
+  refreshToken: string;
+}
+
+/**
+ * 注册请求参数
+ */
+export interface RegisterRequest {
   phone: string;
   password: string;
   confirmPassword: string;
   verificationCode: string;
   userType: 'user' | 'worker';
+  name?: string;
+  avatar?: string;
 }
 
-export interface AuthState {
-  isAuthenticated: boolean;
-  token: string | null;
-  refreshToken: string | null;
-  userType: 'user' | 'worker' | null;
-  userId: string | null;
+/**
+ * 注册响应数据
+ */
+export interface RegisterResponse {
+  user: User;
+  token: string;
+  refreshToken: string;
 }
 
+/**
+ * 验证码请求参数
+ */
 export interface VerificationCodeRequest {
   phone: string;
-  type: 'register' | 'login' | 'reset_password';
+  type: 'login' | 'register' | 'reset';
+}
+
+/**
+ * 验证码响应数据
+ */
+export interface VerificationCodeResponse {
+  success: boolean;
+  message: string;
+  expireTime?: number; // 过期时间戳
+}
+
+/**
+ * 刷新Token请求参数
+ */
+export interface RefreshTokenRequest {
+  refreshToken: string;
+}
+
+/**
+ * 刷新Token响应数据
+ */
+export interface RefreshTokenResponse {
+  token: string;
+  refreshToken: string;
+}
+
+/**
+ * 用户基础信息
+ */
+export interface User {
+  id: string;
+  phone: string;
+  name?: string;
+  avatar?: string;
+  userType: 'user' | 'worker';
+  status: 'active' | 'inactive' | 'banned';
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * 认证状态
+ */
+export interface AuthState {
+  isAuthenticated: boolean;
+  user: User | null;
+  token: string | null;
+  refreshToken: string | null;
+  loading: boolean;
+  error: string | null;
 }

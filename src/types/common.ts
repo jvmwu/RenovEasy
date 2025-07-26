@@ -1,10 +1,22 @@
 // 通用类型定义
 
+/**
+ * 统一 API 响应格式
+ */
 export interface ApiResponse<T = any> {
+  code: number;
+  message: string;
+  data: T | null;
   success: boolean;
-  data: T;
-  message?: string;
-  code?: number;
+}
+
+/**
+ * API 错误详情
+ */
+export interface ApiError {
+  code: number;
+  message: string;
+  details?: Record<string, string[]>;
 }
 
 export interface PaginationParams {
