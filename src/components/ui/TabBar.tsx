@@ -8,11 +8,20 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, layoutStyles, shadows, spacing, textStyles } from '@/styles';
+import { renderIconWithColor } from '@/utils';
 
 export interface TabItem {
   key: string;
   title: string;
+  /** 
+   * 未激活状态的图标
+   * 注意：图标组件应该接受color属性来控制颜色
+   */
   icon?: React.ReactNode;
+  /** 
+   * 激活状态的图标
+   * 注意：图标组件应该接受color属性来控制颜色
+   */
   activeIcon?: React.ReactNode;
   badge?: number | string;
 }
@@ -70,8 +79,8 @@ export const TabBar: React.FC<TabBarProps> = ({
               <View style={iconContainerStyle}>
                 {/* 图标 */}
                 {tab.icon && (
-                  <View style={{ tintColor: tabColor }}>
-                    {isActive && tab.activeIcon ? tab.activeIcon : tab.icon}
+                  <View>
+                    {renderIconWithColor(isActive && tab.activeIcon ? tab.activeIcon : tab.icon, tabColor)}
                   </View>
                 )}
 

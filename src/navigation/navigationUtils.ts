@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavigationContainerRef } from '@react-navigation/native';
+import { TabIcon } from '@/components/ui';
 import { RootStackParamList } from './types';
 
 // 导航引用，用于在组件外部进行导航
@@ -149,3 +150,63 @@ export const TransitionPresets = {
     },
   },
 };
+
+// 图标映射配置
+const ICON_MAPS = {
+  user: {
+    UserHome: '🏠',
+    UserNearby: '👷',
+    UserOrders: '📋',
+    UserProfile: '👤',
+  },
+  worker: {
+    WorkerHome: '🗺️',
+    WorkerOrders: '📋',
+    WorkerProfile: '👤',
+  },
+} as const;
+
+// 创建图标渲染函数的工厂函数
+export function createTabIconRenderer(userType: 'user' | 'worker') {
+  const iconMap = ICON_MAPS[userType];
+  
+  return (routeName: string) => ({ focused }: { focused: boolean }) => (
+    React.createElement(TabIcon, { 
+      name: routeName, 
+      focused, 
+      iconMap 
+    })
+  );
+}
+
+// 通用的 Tab Navigator 样式配置
+export const getTabNavigatorStyles = (activeTintColor: string) => ({
+  tabBarActiveTintColor: activeTintColor,
+  tabBarInactiveTintColor: '#64748B',
+  tabBarStyle: {
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#E2E8F0',
+    paddingBottom: 8,
+    paddingTop: 8,
+    height: 80,
+  },
+  tabBarLabelStyle: {
+    fontSize: 12,
+    fontWeight: '500' as const,
+    marginTop: 4,
+  },
+  headerStyle: {
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  headerTitleStyle: {
+    fontSize: 18,
+    fontWeight: '600' as const,
+    color: '#1E293B',
+  },
+});

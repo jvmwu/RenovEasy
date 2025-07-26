@@ -1,6 +1,6 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { WorkerStackParamList } from './types';
 import { WorkerTabNavigator } from './WorkerTabNavigator';
 
@@ -82,7 +82,6 @@ export function WorkerStackNavigator() {
           fontWeight: '600',
           color: '#1E293B',
         },
-        headerBackTitleVisible: false,
         headerTintColor: '#10B981',
       }}
     >

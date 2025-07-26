@@ -19,8 +19,8 @@ export type {
 } from './types';
 
 // 导航工具
-export { NavigationUtils, NavigationGuards, TransitionPresets } from './navigationUtils';
 export { navigationRef } from './navigationUtils';
+export { NavigationUtils, NavigationGuards, TransitionPresets } from './navigationUtils';
 
 // 导航 Hooks
 export {

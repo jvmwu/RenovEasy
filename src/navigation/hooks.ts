@@ -1,7 +1,7 @@
-import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { useCallback } from 'react';
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import { 
   RootStackParamList, 
   AuthStackParamList, 
@@ -48,11 +48,11 @@ export function useRouteParams<T = any>() {
 }
 
 // 页面焦点状态 Hook
-export function usePageFocus(callback: () => void, deps: any[] = []) {
+export function usePageFocus(callback: () => void) {
   useFocusEffect(
     useCallback(() => {
       callback();
-    }, deps)
+    }, [callback])
   );
 }
 

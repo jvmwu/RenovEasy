@@ -107,7 +107,7 @@ export function UserStackNavigator() {
           fontWeight: '600',
           color: '#1E293B',
         },
-        headerBackTitleVisible: false,
+
         headerTintColor: '#3B82F6',
       }}
     >

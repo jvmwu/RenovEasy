@@ -45,7 +45,8 @@ export {
   updateToken, 
   updateUser, 
   clearError, 
-  setLoading 
+  setLoading,
+  loginSuccess
 } from './slices/authSlice';
 
 // User actions

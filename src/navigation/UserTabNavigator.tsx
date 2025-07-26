@@ -1,7 +1,8 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { UserTabParamList } from './types';
+import { createTabIconRenderer, getTabNavigatorStyles } from './navigationUtils';
 
 const Tab = createBottomTabNavigator<UserTabParamList>();
 
@@ -42,59 +43,15 @@ function UserProfileScreen() {
   );
 }
 
-// 图标组件（临时使用文字）
-function TabIcon({ name, focused }: { name: string; focused: boolean }) {
-  const iconMap: Record<string, string> = {
-    UserHome: '🏠',
-    UserNearby: '👷',
-    UserOrders: '📋',
-    UserProfile: '👤',
-  };
-
-  return (
-    <View className="items-center justify-center">
-      <Text className={`text-lg ${focused ? 'opacity-100' : 'opacity-60'}`}>
-        {iconMap[name] || '📱'}
-      </Text>
-    </View>
-  );
-}
+// 创建用户端图标渲染函数
+const renderTabIcon = createTabIconRenderer('user');
 
 export function UserTabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused }) => (
-          <TabIcon name={route.name} focused={focused} />
-        ),
-        tabBarActiveTintColor: '#3B82F6',
-        tabBarInactiveTintColor: '#64748B',
-        tabBarStyle: {
-          backgroundColor: '#FFFFFF',
-          borderTopWidth: 1,
-          borderTopColor: '#E2E8F0',
-          paddingBottom: 8,
-          paddingTop: 8,
-          height: 80,
-        },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '500',
-          marginTop: 4,
-        },
-        headerStyle: {
-          backgroundColor: '#FFFFFF',
-          shadowColor: '#000000',
-          shadowOffset: { width: 0, height: 1 },
-          shadowOpacity: 0.1,
-          shadowRadius: 2,
-          elevation: 2,
-        },
-        headerTitleStyle: {
-          fontSize: 18,
-          fontWeight: '600',
-          color: '#1E293B',
-        },
+        tabBarIcon: renderTabIcon(route.name),
+        ...getTabNavigatorStyles('#3B82F6'),
       })}
     >
       <Tab.Screen

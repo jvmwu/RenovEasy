@@ -17,3 +17,6 @@ export type { NavigationBarProps } from './NavigationBar';
 
 export { TabBar } from './TabBar';
 export type { TabBarProps, TabItem } from './TabBar';
+
+export { TabIcon } from './TabIcon';
+export type { TabIconProps } from './TabIcon';

@@ -135,6 +135,28 @@ const authSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
+    //TODO: 直接设置登录成功状态（用于模拟登录, 后期删除）
+    loginSuccess: (state, action: PayloadAction<{
+      token: string;
+      refreshToken: string;
+      userType: 'user' | 'worker';
+      userId: string;
+    }>) => {
+      state.isAuthenticated = true;
+      state.user = {
+        id: action.payload.userId,
+        phone: '', // 可以从其他地方获取
+        name: action.payload.userType === 'user' ? '用户' : '装修工',
+        userType: action.payload.userType,
+        status: 'active',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      state.token = action.payload.token;
+      state.refreshToken = action.payload.refreshToken;
+      state.loading = false;
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     // 登录
@@ -236,7 +258,8 @@ export const {
   updateToken, 
   updateUser,
   clearError,
-  setLoading 
+  setLoading,
+  loginSuccess
 } = authSlice.actions;
 
 export default authSlice.reducer;

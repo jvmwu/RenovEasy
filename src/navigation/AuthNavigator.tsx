@@ -89,7 +89,7 @@ function PhoneInputScreen({ navigation }: any) {
 
 function VerificationCodeScreen({ navigation, route }: any) {
   
-  const { phone, type } = route.params;
+  const { phone, /* type */ } = route.params;
 
   return (
     <View className="flex-1 bg-white px-6 pt-12">
@@ -138,8 +138,9 @@ function VerificationCodeScreen({ navigation, route }: any) {
   );
 }
 
-function UserTypeSelectionScreen({ navigation, route }: any) {
-  const { phone, verificationCode } = route.params;
+function UserTypeSelectionScreen({ navigation: _navigation, route: _route }: any) {
+
+  // const { phone, verificationCode } = route.params;
   const dispatch = useAppDispatch();
 
   const handleUserTypeSelect = async (userType: 'user' | 'worker') => {
@@ -238,7 +239,7 @@ export function AuthNavigator() {
           fontWeight: '600',
           color: '#1E293B',
         },
-        headerBackTitleVisible: false,
+
         headerTintColor: '#3B82F6',
       }}
     >
